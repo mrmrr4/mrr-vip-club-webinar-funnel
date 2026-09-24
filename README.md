@@ -1,9 +1,22 @@
 # MRR VIP Club Webinar Funnel
 
-This repository will power THREE separate Vercel sites from one codebase:
+This repository contains three separate production sites, all deployed from the same GitHub repository.
 
-1. `landing-page-1` — Landing Page 1
-2. `landing-page-2` — Landing Page 2
-3. `confirmation` — Confirmation Page
+## Vercel projects
 
-Each folder is connected to its own Vercel project by choosing that folder as the Vercel Root Directory. This keeps all three sites completely separate while allowing future GitHub changes to auto-deploy live.
+1. **Landing Page 1**
+   - Root Directory: `landing-page-1`
+
+2. **Landing Page 2**
+   - Root Directory: `landing-page-2`
+
+3. **Confirmation Page**
+   - Root Directory: `confirmation`
+
+Each folder has its own Vercel configuration and deploys independently.
+
+## Future updates
+
+Changes pushed to one folder can be deployed by its linked Vercel project without changing the other two sites.
+
+WebinarJam / EverWebinar registration logic can be added later without rebuilding the site structure.
