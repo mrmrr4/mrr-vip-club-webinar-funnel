@@ -1,5 +1,5 @@
 {
-  "buildCommand": "cat site.b64.* | base64 -d > site.tar.gz && rm -rf public && mkdir -p public && tar -xzf site.tar.gz -C public && cp index.html public/index.html && cp script.js public/script.js",
+  "buildCommand": "cat site.b64.* | base64 -d > site.tar.gz && rm -rf public && mkdir -p public && tar -xzf site.tar.gz -C public && cp index.html public/index.html && cp script.js public/script.js && mkdir -p public/privacy public/terms && cp privacy/index.html public/privacy/index.html && cp terms/index.html public/terms/index.html",
   "outputDirectory": "public",
   "framework": null,
   "cleanUrls": true
