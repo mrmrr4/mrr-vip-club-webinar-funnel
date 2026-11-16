@@ -17,13 +17,6 @@ openers.forEach(btn => btn.addEventListener('click', openRegistration));
 closers.forEach(btn => btn.addEventListener('click', closeRegistration));
 document.addEventListener('keydown', e => { if(e.key === 'Escape') closeRegistration(); });
 
-document.getElementById('registration-form').addEventListener('submit', e => {
-  e.preventDefault();
-  const msg = document.getElementById('form-message');
-  msg.textContent = 'Prototype mode: the page is ready for your EverWebinar registration embed/code.';
-  msg.classList.add('show');
-});
-
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if(entry.isIntersecting){
