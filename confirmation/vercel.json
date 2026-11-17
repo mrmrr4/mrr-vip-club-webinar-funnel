@@ -1,5 +1,5 @@
 {
-  "buildCommand": "cat site.b64.* | base64 -d > site.tar.gz && rm -rf public && mkdir -p public && tar -xzf site.tar.gz -C public",
+  "buildCommand": "sh build.sh",
   "outputDirectory": "public",
   "framework": null,
   "cleanUrls": true
