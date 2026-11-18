@@ -81,6 +81,10 @@ function updateCalculator(){
   document.getElementById('result-revenue').textContent = currency.format(revenue);
   document.getElementById('result-costs').textContent = '-' + currency.format(costs);
   document.getElementById('result-profit').textContent = currency.format(profit);
+  const monthOneProfitCopy = document.getElementById('month-one-profit-copy');
+  if(monthOneProfitCopy){
+    monthOneProfitCopy.textContent = currency.format(profit);
+  }
 }
 [calcCustomers, calcPrice, calcApproval, calcFees].forEach(input => {
   if(input){
