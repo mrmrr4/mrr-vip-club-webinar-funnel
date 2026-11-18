@@ -316,13 +316,18 @@
           <div>
             <div class="eyebrow">MONTH 1 PROFIT CALCULATOR</div>
             <h2>See what the first month alone <span>could look like.</span></h2>
-            <p>This calculator is intentionally simple. It only looks at the first rebill month and does not include any compounding effect.</p>
+            <p>Enter your expected new customers and membership price to see what month one could look like before the compounding effect begins.</p>
           </div>
           
         </div>
 
-        <div class="calc-grid">
-          <div class="calc-inputs">
+        <div class="calc-grid calc-grid-simple">
+          <div class="calc-inputs calc-inputs-simple">
+            <div class="calc-simple-intro">
+              <span class="calc-simple-kicker">TRY YOUR OWN NUMBERS</span>
+              <strong>How many new customers could enter your membership each month?</strong>
+              <p>Change either number below to see what the first month of recurring membership revenue could look like.</p>
+            </div>
             <label>
               <span>New customers entering the membership</span>
               <input id="calc-customers" type="number" min="0" step="1" value="1000">
@@ -331,26 +336,18 @@
               <span>VIP membership price ($)</span>
               <input id="calc-price" type="number" min="0" step="0.01" value="29.99">
             </label>
-            <label>
-              <span>First rebill approval rate (%) <em class="input-lock-copy">80% <b>(with the right backend)</b></em></span>
-              <input id="calc-approval" class="locked-field" type="number" min="0" max="100" step="1" value="80" readonly>
-            </label>
-            <label>
-              <span>Estimated fees / refunds / alerts / CRM costs (%) <em class="input-lock-copy">30% <b>(with the right backend)</b></em></span>
-              <input id="calc-fees" class="locked-field" type="number" min="0" max="100" step="1" value="30" readonly>
-            </label>
           </div>
 
-          <div class="calc-results">
+          <div class="calc-results calc-results-simple">
             <div class="result-hero">
-              <div class="result-label">ESTIMATED APPROVED REBILLS</div>
-              <div class="result-big" id="result-approved">800</div>
-              <div class="result-sub">Approved subscribers in month 1</div>
+              <div class="result-label">ESTIMATED MONTH 1 SUBSCRIBERS</div>
+              <div class="result-big" id="result-approved">1,000</div>
+              <div class="result-sub">New subscribers entering the membership</div>
             </div>
 
-            <div class="result-row"><span>Month 1 rebill revenue</span><b id="result-revenue">$23,992.00</b></div>
-            <div class="result-row"><span>Minus estimated backend costs</span><b id="result-costs">-$7,197.60</b></div>
-            <div class="result-row total"><span>Month 1 rebill profit</span><b id="result-profit">$16,794.40</b></div>
+            <div class="result-row"><span>Month 1 recurring revenue</span><b id="result-revenue">$29,990.00</b></div>
+            <div class="result-row total"><span>Month 1 recurring profit</span><b id="result-profit">$29,990.00</b></div>
+            <div class="calc-simple-note">This simple example shows the membership revenue before any operating costs or payment processing deductions.</div>
           </div>
         </div>
 
