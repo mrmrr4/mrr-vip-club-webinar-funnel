@@ -2,11 +2,42 @@ const modal = document.getElementById('registration-modal');
 const openers = document.querySelectorAll('[data-open-registration]');
 const closers = document.querySelectorAll('[data-close-registration]');
 
+let webinarFormLoading = false;
+let webinarFormLoaded = false;
+
+function ensureWebinarFormLoaded(){
+  if(webinarFormLoaded || webinarFormLoading) return;
+  const wrapper = document.getElementById('everwebinar-registration');
+  if(!wrapper) return;
+
+  webinarFormLoading = true;
+  const loading = wrapper.querySelector('.webinar-form-loading');
+  const script = document.createElement('script');
+  script.src = 'https://event.webinarjam.com/register/v888q0u7/embed-form?formButtonText=SAVE%20MY%20FREE%20SEAT&formAccentColor=%2329b6f6&formAccentOpacity=0.95&formBgColor=%23ffffff&formBgOpacity=1';
+  script.async = true;
+
+  script.onload = () => {
+    webinarFormLoaded = true;
+    webinarFormLoading = false;
+    loading?.remove();
+    setTimeout(() => modal.querySelector('input')?.focus(), 250);
+  };
+
+  script.onerror = () => {
+    webinarFormLoading = false;
+    if(loading){
+      loading.textContent = 'The registration form could not load. Please close this window and try again.';
+    }
+  };
+
+  wrapper.appendChild(script);
+}
+
 function openRegistration(){
   modal.classList.add('is-open');
   modal.setAttribute('aria-hidden','false');
   document.body.classList.add('modal-open');
-  setTimeout(() => modal.querySelector('input')?.focus(), 100);
+  ensureWebinarFormLoaded();
 }
 function closeRegistration(){
   modal.classList.remove('is-open');
