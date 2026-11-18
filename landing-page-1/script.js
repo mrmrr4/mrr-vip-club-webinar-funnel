@@ -63,30 +63,24 @@ const numberFmt = new Intl.NumberFormat('en-US');
 
 const calcCustomers = document.getElementById('calc-customers');
 const calcPrice = document.getElementById('calc-price');
-const calcApproval = document.getElementById('calc-approval');
-const calcFees = document.getElementById('calc-fees');
 
 function updateCalculator(){
   const customers = Math.max(0, parseFloat(calcCustomers.value) || 0);
   const price = Math.max(0, parseFloat(calcPrice.value) || 0);
-  const approvalRate = Math.min(100, Math.max(0, parseFloat(calcApproval.value) || 0)) / 100;
-  const feeRate = Math.min(100, Math.max(0, parseFloat(calcFees.value) || 0)) / 100;
 
-  const approved = customers * approvalRate;
-  const revenue = approved * price;
-  const costs = revenue * feeRate;
-  const profit = revenue - costs;
+  const subscribers = customers;
+  const revenue = subscribers * price;
+  const profit = revenue;
 
-  document.getElementById('result-approved').textContent = numberFmt.format(Math.round(approved));
+  document.getElementById('result-approved').textContent = numberFmt.format(Math.round(subscribers));
   document.getElementById('result-revenue').textContent = currency.format(revenue);
-  document.getElementById('result-costs').textContent = '-' + currency.format(costs);
   document.getElementById('result-profit').textContent = currency.format(profit);
   const monthOneProfitCopy = document.getElementById('month-one-profit-copy');
   if(monthOneProfitCopy){
     monthOneProfitCopy.textContent = currency.format(profit);
   }
 }
-[calcCustomers, calcPrice, calcApproval, calcFees].forEach(input => {
+[calcCustomers, calcPrice].forEach(input => {
   if(input){
     input.addEventListener('input', updateCalculator);
   }
