@@ -156,3 +156,72 @@ faqQuestions.forEach(question => {
     }
   });
 });
+
+
+// Next masterclass countdown
+(function initMasterclassCountdown(){
+  const countdowns = document.querySelectorAll('[data-masterclass-countdown]');
+  if(!countdowns.length) return;
+
+  function getNextSession(now){
+    const next = new Date(now);
+    next.setMilliseconds(0);
+    next.setSeconds(0);
+
+    const hour = now.getHours();
+    const minute = now.getMinutes();
+    const second = now.getSeconds();
+
+    // EverWebinar sessions are offered on the hour, with night-time sessions hidden.
+    // Show the next available top-of-hour session between 07:00 and 22:00 in the viewer's local time.
+    if(hour < 7){
+      next.setHours(7, 0, 0, 0);
+      return next;
+    }
+
+    if(hour >= 22){
+      next.setDate(next.getDate() + 1);
+      next.setHours(7, 0, 0, 0);
+      return next;
+    }
+
+    if(minute === 0 && second <= 15){
+      next.setHours(hour, 0, 0, 0);
+      return next;
+    }
+
+    next.setHours(hour + 1, 0, 0, 0);
+    if(next.getHours() >= 23){
+      next.setDate(next.getDate() + 1);
+      next.setHours(7, 0, 0, 0);
+    }
+    return next;
+  }
+
+  let target = getNextSession(new Date());
+
+  function renderCountdown(){
+    const now = new Date();
+    if(now >= target){
+      target = getNextSession(new Date(now.getTime() + 16000));
+    }
+
+    const remaining = Math.max(0, target.getTime() - now.getTime());
+    const totalSeconds = Math.floor(remaining / 1000);
+    const hours = Math.floor(totalSeconds / 3600);
+    const minutes = Math.floor((totalSeconds % 3600) / 60);
+    const seconds = totalSeconds % 60;
+
+    const value = hours > 0
+      ? `${String(hours).padStart(2,'0')}:${String(minutes).padStart(2,'0')}:${String(seconds).padStart(2,'0')}`
+      : `${String(minutes).padStart(2,'0')}:${String(seconds).padStart(2,'0')}`;
+
+    countdowns.forEach(el => {
+      el.textContent = value;
+      el.setAttribute('aria-label', `Next masterclass starts in ${hours} hours, ${minutes} minutes and ${seconds} seconds`);
+    });
+  }
+
+  renderCountdown();
+  setInterval(renderCountdown, 1000);
+})();
