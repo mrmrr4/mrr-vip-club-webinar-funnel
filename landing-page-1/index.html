@@ -10,6 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="urgency.css" />
   <!-- Meta Pixel Code -->
   <script>
   !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -23,6 +24,16 @@
   <!-- End Meta Pixel Code -->
 </head>
 <body>
+  <div class="masterclass-alert" role="status" aria-label="Next free masterclass">
+    <div class="masterclass-alert-inner">
+      <span class="masterclass-alert-base">100% FREE VIP CLUB ECOM MASTERCLASS</span>
+      <span class="masterclass-alert-separator first">•</span>
+      <span class="masterclass-alert-audience">FOR CURRENT &amp; FORMER ECOM OPERATORS</span>
+      <span class="masterclass-alert-separator">•</span>
+      <span class="masterclass-alert-next"><span class="masterclass-alert-dot"></span> NEXT MASTERCLASS STARTS IN <span class="masterclass-alert-countdown" data-masterclass-countdown>--:--</span></span>
+    </div>
+  </div>
+
   <div class="ambient ambient-one"></div>
   <div class="ambient ambient-two"></div>
 
@@ -33,6 +44,21 @@
     </a>
     <button class="header-cta" data-open-registration>FREE MASTERCLASS</button>
   </header>
+
+  <section class="next-masterclass-wrap" aria-label="Next free masterclass">
+    <div class="next-masterclass-card">
+      <div class="next-session-copy">
+        <div class="next-session-kicker"><span class="next-session-dot"></span> NEXT FREE LIVE MASTERCLASS</div>
+        <h2 class="next-session-title">The next VIP Club masterclass is starting soon.</h2>
+        <p class="next-session-sub">Reserve your free seat now and join the next available session to see exactly how the VIP Club ecommerce model works.</p>
+      </div>
+      <div class="next-session-timer">
+        <span class="next-session-timer-label">NEXT SESSION IN</span>
+        <span class="next-session-time" data-masterclass-countdown>--:--</span>
+      </div>
+      <button class="next-masterclass-cta" data-open-registration>RESERVE MY FREE SEAT <span class="next-masterclass-arrow">→</span></button>
+    </div>
+  </section>
 
   <main id="top">
     <section class="hero section-pad">
