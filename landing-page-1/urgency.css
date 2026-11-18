@@ -329,3 +329,105 @@
     font-size: 9px;
   }
 }
+
+
+/* Mobile registration modal fix */
+@media (max-width: 700px) {
+  .modal {
+    position: fixed !important;
+    inset: 0 !important;
+    display: none;
+    align-items: flex-start !important;
+    justify-content: flex-start !important;
+    padding: 0 !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+    z-index: 9999 !important;
+  }
+
+  .modal.is-open {
+    display: block !important;
+  }
+
+  .modal-backdrop {
+    position: fixed !important;
+    inset: 0 !important;
+  }
+
+  .modal-card {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    transform: none !important;
+    width: 100% !important;
+    max-width: none !important;
+    min-height: 100dvh !important;
+    max-height: none !important;
+    margin: 0 !important;
+    padding:
+      calc(28px + env(safe-area-inset-top))
+      14px
+      calc(32px + env(safe-area-inset-bottom)) !important;
+    border-radius: 0 !important;
+    overflow: visible !important;
+    box-sizing: border-box !important;
+  }
+
+  .modal-card > .eyebrow,
+  .modal-card > h2,
+  .modal-card > p,
+  .modal-card > small {
+    padding-left: 4px;
+    padding-right: 52px;
+  }
+
+  .modal-card h2 {
+    margin-top: 8px !important;
+    font-size: clamp(32px, 10vw, 44px) !important;
+    line-height: 1.05 !important;
+  }
+
+  .modal-card > p {
+    font-size: 16px !important;
+    line-height: 1.45 !important;
+  }
+
+  .modal-close {
+    position: fixed !important;
+    top: calc(10px + env(safe-area-inset-top)) !important;
+    right: 12px !important;
+    z-index: 10001 !important;
+    display: grid !important;
+    place-items: center !important;
+    width: 44px !important;
+    height: 44px !important;
+    min-width: 44px !important;
+    min-height: 44px !important;
+    border-radius: 999px !important;
+    background: rgba(8, 15, 29, .94) !important;
+    border: 1px solid rgba(255,255,255,.18) !important;
+    color: #fff !important;
+    font-size: 30px !important;
+    line-height: 1 !important;
+    box-shadow: 0 8px 24px rgba(0,0,0,.34) !important;
+  }
+
+  .wj-embed-wrapper {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-top: 18px !important;
+    overflow: visible !important;
+  }
+
+  .wj-embed-wrapper iframe,
+  .wj-embed-wrapper > div,
+  .wj-embed-wrapper form {
+    max-width: 100% !important;
+  }
+
+  body.modal-open {
+    overflow: hidden !important;
+  }
+}
