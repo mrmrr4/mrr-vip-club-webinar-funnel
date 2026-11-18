@@ -158,7 +158,14 @@
 @media (max-width: 820px) {
   .masterclass-alert { font-size: 10px; letter-spacing: .045em; }
   .masterclass-alert-inner { min-height: 38px; padding: 7px 14px; gap: 6px; flex-wrap: wrap; }
-  .masterclass-alert-audience, .masterclass-alert-separator.first { display: none; }
+  .masterclass-alert-inner > * { display: none !important; }
+  .masterclass-alert-inner::after {
+    content: "100% FREE VIP CLUB MASTERCLASS";
+    display: block;
+    width: 100%;
+    text-align: center;
+    font-weight: 900;
+  }
   .next-masterclass-wrap { margin-top: 12px; padding: 0 14px; }
   .next-masterclass-card {
     grid-template-columns: 1fr auto;
@@ -174,9 +181,6 @@
 }
 @media (max-width: 520px) {
   .masterclass-alert-inner { justify-content: center; }
-  .masterclass-alert-base { display: none; }
-  .masterclass-alert-separator { display: none; }
-  .masterclass-alert-next { width: 100%; justify-content: center; }
   .next-masterclass-card { grid-template-columns: 1fr; }
   .next-session-copy, .next-session-timer, .next-masterclass-cta { grid-column: 1; }
   .next-session-timer { width: 100%; }
