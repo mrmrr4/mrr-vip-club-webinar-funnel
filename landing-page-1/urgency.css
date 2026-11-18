@@ -503,3 +503,25 @@
     font-size: 11px;
   }
 }
+
+
+/* Mobile first-paint performance */
+@media (max-width: 820px) {
+  .ambient {
+    display: none !important;
+  }
+
+  main > section:not(.hero) {
+    content-visibility: auto;
+    contain-intrinsic-size: 900px;
+  }
+
+  .dashboard-stack,
+  .profit-compare-shell,
+  .calc-shell,
+  .review-grid,
+  .curriculum-grid {
+    content-visibility: auto;
+    contain-intrinsic-size: 700px;
+  }
+}
