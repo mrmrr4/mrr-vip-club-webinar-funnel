@@ -1,0 +1,90 @@
+.confirmation-masterclass-card{
+  width:100%;
+  margin:0 0 22px;
+  padding:18px 20px;
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto;
+  gap:18px;
+  align-items:center;
+  border:1px solid rgba(83,139,255,.30);
+  border-radius:16px;
+  background:
+    radial-gradient(circle at 0% 0%,rgba(59,130,246,.16),transparent 42%),
+    radial-gradient(circle at 100% 100%,rgba(139,92,246,.14),transparent 46%),
+    rgba(12,22,43,.92);
+  box-shadow:0 16px 50px rgba(0,0,0,.22),inset 0 1px 0 rgba(255,255,255,.04);
+  box-sizing:border-box;
+}
+.confirmation-masterclass-kicker{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  margin-bottom:6px;
+  color:#84b6ff;
+  font-size:10px;
+  font-weight:800;
+  letter-spacing:.13em;
+  text-transform:uppercase;
+}
+.confirmation-masterclass-dot{
+  width:7px;
+  height:7px;
+  flex:0 0 7px;
+  border-radius:50%;
+  background:#43e3b4;
+  box-shadow:0 0 0 5px rgba(67,227,180,.08);
+}
+.confirmation-masterclass-date{
+  color:#fff;
+  font-size:17px;
+  line-height:1.35;
+  font-weight:800;
+  letter-spacing:-.015em;
+}
+.confirmation-masterclass-date span{
+  color:#78d9ff;
+}
+.confirmation-masterclass-sub{
+  margin-top:5px;
+  color:#8f9db6;
+  font-size:12px;
+  line-height:1.45;
+}
+.confirmation-masterclass-countdown-wrap{
+  min-width:205px;
+  padding:12px 14px;
+  text-align:center;
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:13px;
+  background:rgba(255,255,255,.035);
+}
+.confirmation-masterclass-countdown-label{
+  display:block;
+  margin-bottom:4px;
+  color:#6f7c94;
+  font-size:9px;
+  font-weight:800;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+}
+.confirmation-masterclass-countdown{
+  color:#fff;
+  font-size:17px;
+  font-weight:900;
+  font-variant-numeric:tabular-nums;
+  white-space:nowrap;
+}
+@media(max-width:700px){
+  .confirmation-masterclass-card{
+    grid-template-columns:1fr;
+    gap:12px;
+    margin-bottom:18px;
+    padding:16px;
+  }
+  .confirmation-masterclass-date{font-size:16px}
+  .confirmation-masterclass-countdown-wrap{
+    min-width:0;
+    width:100%;
+  }
+  .confirmation-masterclass-countdown{font-size:16px}
+}
