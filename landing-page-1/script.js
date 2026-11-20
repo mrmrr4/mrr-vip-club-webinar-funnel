@@ -279,7 +279,6 @@ faqQuestions.forEach(question => {
     const time = new Intl.DateTimeFormat('en-US', {
       timeZone,
       hour: 'numeric',
-      minute: '2-digit',
       hour12: true
     }).format(date);
 
@@ -305,7 +304,6 @@ faqQuestions.forEach(question => {
     const time = new Intl.DateTimeFormat('en-US', {
       timeZone,
       hour: 'numeric',
-      minute: '2-digit',
       hour12: true
     }).format(date);
 
