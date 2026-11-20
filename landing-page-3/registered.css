@@ -208,3 +208,13 @@ footer p{font-size:10px;line-height:1.6}
     margin-right:auto;
   }
 }
+
+.x-profile-shot{
+  display:block;
+  width:100%;
+  margin-top:20px;
+  border:1px solid #e4ddef;
+  border-radius:12px;
+  background:#f7f5f9;
+  object-fit:cover;
+}
