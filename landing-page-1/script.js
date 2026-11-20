@@ -156,70 +156,204 @@ faqQuestions.forEach(question => {
 });
 
 
-// Next masterclass countdown
-(function initMasterclassCountdown(){
+// Weekly masterclass schedule: Wednesday 7 PM ET and Sunday 3 PM ET
+(function initMasterclassSchedule(){
+  const timeZone = 'America/New_York';
   const countdowns = document.querySelectorAll('[data-masterclass-countdown]');
-  if(!countdowns.length) return;
+  const dateLabels = document.querySelectorAll('[data-masterclass-date]');
+  const shortDateLabels = document.querySelectorAll('[data-masterclass-date-short]');
+  if(!countdowns.length && !dateLabels.length && !shortDateLabels.length) return;
+
+  const easternPartsFormatter = new Intl.DateTimeFormat('en-US', {
+    timeZone,
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+    hourCycle: 'h23'
+  });
+
+  function getEasternParts(date){
+    const parts = easternPartsFormatter.formatToParts(date);
+    const values = {};
+    parts.forEach(part => {
+      if(part.type !== 'literal') values[part.type] = part.value;
+    });
+    return {
+      year: Number(values.year),
+      month: Number(values.month),
+      day: Number(values.day),
+      hour: Number(values.hour),
+      minute: Number(values.minute),
+      second: Number(values.second)
+    };
+  }
+
+  function getTimeZoneOffsetMs(date){
+    const p = getEasternParts(date);
+    const asUtc = Date.UTC(p.year, p.month - 1, p.day, p.hour, p.minute, p.second);
+    return asUtc - date.getTime();
+  }
+
+  function easternLocalToUtc(year, month, day, hour, minute = 0){
+    const utcGuess = new Date(Date.UTC(year, month - 1, day, hour, minute, 0));
+    let offset = getTimeZoneOffsetMs(utcGuess);
+    let target = new Date(utcGuess.getTime() - offset);
+
+    // Re-check using the target itself so DST changes remain accurate year-round.
+    const correctedOffset = getTimeZoneOffsetMs(target);
+    if(correctedOffset !== offset){
+      target = new Date(utcGuess.getTime() - correctedOffset);
+    }
+    return target;
+  }
 
   function getNextSession(now){
-    const next = new Date(now);
-    next.setMilliseconds(0);
-    next.setSeconds(0);
+    const easternNow = getEasternParts(now);
 
-    const hour = now.getHours();
-    const minute = now.getMinutes();
-    const second = now.getSeconds();
+    for(let addDays = 0; addDays < 8; addDays++){
+      const calendarDate = new Date(Date.UTC(
+        easternNow.year,
+        easternNow.month - 1,
+        easternNow.day + addDays,
+        12,
+        0,
+        0
+      ));
 
-    // EverWebinar sessions are offered on the hour, with night-time sessions hidden.
-    // Show the next available top-of-hour session between 07:00 and 22:00 in the viewer's local time.
-    if(hour < 7){
-      next.setHours(7, 0, 0, 0);
-      return next;
+      const weekday = calendarDate.getUTCDay();
+      let sessionHour = null;
+
+      if(weekday === 0) sessionHour = 15; // Sunday 3 PM Eastern
+      if(weekday === 3) sessionHour = 19; // Wednesday 7 PM Eastern
+      if(sessionHour === null) continue;
+
+      const candidate = easternLocalToUtc(
+        calendarDate.getUTCFullYear(),
+        calendarDate.getUTCMonth() + 1,
+        calendarDate.getUTCDate(),
+        sessionHour
+      );
+
+      if(candidate.getTime() > now.getTime()){
+        return candidate;
+      }
     }
 
-    if(hour >= 22){
-      next.setDate(next.getDate() + 1);
-      next.setHours(7, 0, 0, 0);
-      return next;
-    }
+    return null;
+  }
 
-    if(minute === 0 && second <= 15){
-      next.setHours(hour, 0, 0, 0);
-      return next;
-    }
+  function ordinal(day){
+    if(day % 100 >= 11 && day % 100 <= 13) return day + 'th';
+    if(day % 10 === 1) return day + 'st';
+    if(day % 10 === 2) return day + 'nd';
+    if(day % 10 === 3) return day + 'rd';
+    return day + 'th';
+  }
 
-    next.setHours(hour + 1, 0, 0, 0);
-    if(next.getHours() >= 23){
-      next.setDate(next.getDate() + 1);
-      next.setHours(7, 0, 0, 0);
-    }
-    return next;
+  function getZoneLabel(date){
+    return new Intl.DateTimeFormat('en-US', {
+      timeZone,
+      timeZoneName: 'short'
+    }).formatToParts(date).find(part => part.type === 'timeZoneName')?.value || 'ET';
+  }
+
+  function formatSessionDate(date){
+    const dayName = new Intl.DateTimeFormat('en-US', {
+      timeZone,
+      weekday: 'long'
+    }).format(date);
+
+    const monthName = new Intl.DateTimeFormat('en-US', {
+      timeZone,
+      month: 'long'
+    }).format(date);
+
+    const day = Number(new Intl.DateTimeFormat('en-US', {
+      timeZone,
+      day: 'numeric'
+    }).format(date));
+
+    const time = new Intl.DateTimeFormat('en-US', {
+      timeZone,
+      hour: 'numeric',
+      minute: '2-digit',
+      hour12: true
+    }).format(date);
+
+    return `${dayName} ${ordinal(day)} ${monthName} at ${time} ${getZoneLabel(date)}`;
+  }
+
+  function formatShortSessionDate(date){
+    const weekday = new Intl.DateTimeFormat('en-US', {
+      timeZone,
+      weekday: 'short'
+    }).format(date).toUpperCase();
+
+    const month = new Intl.DateTimeFormat('en-US', {
+      timeZone,
+      month: 'short'
+    }).format(date).toUpperCase();
+
+    const day = Number(new Intl.DateTimeFormat('en-US', {
+      timeZone,
+      day: 'numeric'
+    }).format(date));
+
+    const time = new Intl.DateTimeFormat('en-US', {
+      timeZone,
+      hour: 'numeric',
+      minute: '2-digit',
+      hour12: true
+    }).format(date);
+
+    return `${weekday} ${ordinal(day).toUpperCase()} ${month} · ${time} ${getZoneLabel(date)}`;
   }
 
   let target = getNextSession(new Date());
 
+  function updateSessionLabels(){
+    if(!target) return;
+    const full = formatSessionDate(target);
+    const short = formatShortSessionDate(target);
+    dateLabels.forEach(el => el.textContent = full);
+    shortDateLabels.forEach(el => el.textContent = short);
+  }
+
   function renderCountdown(){
     const now = new Date();
-    if(now >= target){
-      target = getNextSession(new Date(now.getTime() + 16000));
+
+    if(!target || now.getTime() >= target.getTime()){
+      target = getNextSession(new Date(now.getTime() + 1000));
+      updateSessionLabels();
     }
+
+    if(!target) return;
 
     const remaining = Math.max(0, target.getTime() - now.getTime());
     const totalSeconds = Math.floor(remaining / 1000);
-    const hours = Math.floor(totalSeconds / 3600);
+    const days = Math.floor(totalSeconds / 86400);
+    const hours = Math.floor((totalSeconds % 86400) / 3600);
     const minutes = Math.floor((totalSeconds % 3600) / 60);
     const seconds = totalSeconds % 60;
 
-    const value = hours > 0
-      ? `${String(hours).padStart(2,'0')}:${String(minutes).padStart(2,'0')}:${String(seconds).padStart(2,'0')}`
-      : `${String(minutes).padStart(2,'0')}:${String(seconds).padStart(2,'0')}`;
+    const value = days > 0
+      ? `${days}D ${String(hours).padStart(2,'0')}H ${String(minutes).padStart(2,'0')}M ${String(seconds).padStart(2,'0')}S`
+      : `${String(hours).padStart(2,'0')}H ${String(minutes).padStart(2,'0')}M ${String(seconds).padStart(2,'0')}S`;
 
     countdowns.forEach(el => {
       el.textContent = value;
-      el.setAttribute('aria-label', `Next masterclass starts in ${hours} hours, ${minutes} minutes and ${seconds} seconds`);
+      el.setAttribute(
+        'aria-label',
+        `Next masterclass starts in ${days} days, ${hours} hours, ${minutes} minutes and ${seconds} seconds`
+      );
     });
   }
 
+  updateSessionLabels();
   renderCountdown();
   setInterval(renderCountdown, 1000);
 })();
+
